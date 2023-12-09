@@ -1,1 +1,15 @@
-/* You can add global styles to this file, and also import other style files */
+@import "animate.css";
+@import "./variables.scss";
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap');
+
+html{
+    background-color: $primary-color;
+}
+
+body{
+    margin: 0;
+}
+
+* > p{
+    margin: 0;
+}

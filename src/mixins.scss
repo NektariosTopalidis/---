@@ -1,0 +1,7 @@
+@mixin transitionDelay {
+    @for $i from 1 through 50 {
+      &:nth-of-type(#{$i}) {
+       animation-delay: #{$i * 45}ms;
+      }
+    }
+} 

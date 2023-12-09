@@ -1,0 +1,96 @@
+@import "../../../variables.scss";
+@import "../../../mixins.scss";
+
+.yo{
+    color: $secondary-color;
+
+    @include transitionDelay;
+}
+
+.table{
+    width: calc(50vw - 24px);
+    padding: 24px;
+
+    .table-head{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-direction: row;
+        
+        background-color: $secondary-color;
+        padding: 12px 12px;
+        border-radius: 4px;
+        margin-bottom: 16px;
+
+        .table-head-item{
+            width: calc((50vw - 24px)/4);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            h3{
+                margin: 0;
+                font-family: 'Montserrat', sans-serif;
+                color: $primary-color;
+    
+                position: relative;
+            }
+
+            position: relative;
+
+            &::after{
+                content: "";
+                position: absolute;
+                right: 0;
+                width: 2px;
+                height: 100%;
+                border-radius: 8px;
+                background-color: $secondary-color-darker;
+            }
+
+            &:last-child{
+
+                &::after{
+                    position: relative;
+                }
+            }
+        }
+
+    }
+
+    .table-body{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-direction: column;
+        gap: 8px;
+
+        .process{
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            background-color: white;
+            padding: 12px 0px;
+            border-radius: 4px;
+
+            @include transitionDelay;
+
+            .table-body-item{
+                width: calc((50vw - 24px)/4);
+                display: flex;
+                justify-content: center;
+                align-items: center;
+    
+                h4{
+                    margin: 0;
+                    font-family: 'Montserrat', sans-serif;
+                    color: $primary-color;
+        
+                    position: relative;
+                }
+            }
+        }
+
+    }
+}
