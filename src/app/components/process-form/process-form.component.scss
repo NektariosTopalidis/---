@@ -65,6 +65,27 @@
         flex-direction: column;
         gap: 8px;
 
+        height: 25vh;
+
+        overflow-y: scroll;
+        overflow-x: hidden;
+
+        &::-webkit-scrollbar-track{
+            background-color: $primary-color !important;
+        }
+
+        &::-webkit-scrollbar-thumb {
+            background-color: $secondary-color !important;
+            padding: 4px 0px !important;
+        }
+
+        .no-processes{
+            font-family: 'Montserrat', sans-serif;
+            color: white;
+        }
+
+
+
         .process{
             display: flex;
             flex-direction: row;
@@ -72,7 +93,7 @@
             align-items: center;
             background-color: white;
             padding: 12px 0px;
-            border-radius: 4px;
+            border-radius: 8px;
 
             @include transitionDelay;
 
@@ -93,4 +114,29 @@
         }
 
     }
+
+    .actions{
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        .add-process-btn{
+            font-size: 24px;
+            font-weight: bold;
+            color: $primary-color;
+            background-color: $secondary-color;
+            border: none;
+            border-radius: 120px;
+            padding: 8px 14px;
+            cursor: pointer;
+    
+            transition: all 0.2s ease-in-out;
+    
+            &:hover{
+                background-color: $secondary-color-darker;
+            }
+        }
+    }
+
 }

@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { ProcessFormRoutingModule } from './process-form-routing.module';
 import { ProcessFormComponent } from './process-form.component';
-
+import { ProcessesService } from '../../services/processes.service';
 
 @NgModule({
   declarations: [ProcessFormComponent],
@@ -11,8 +11,11 @@ import { ProcessFormComponent } from './process-form.component';
     CommonModule,
     ProcessFormRoutingModule
   ],
+  providers: [
+    ProcessesService
+  ],
   exports: [
-    ProcessFormComponent,
+    ProcessFormComponent
   ]
 })
 export class ProcessFormModule { }

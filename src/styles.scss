@@ -13,3 +13,11 @@ body{
 * > p{
     margin: 0;
 }
+
+.table-body::-webkit-scrollbar {
+    width: 10px;
+}
+
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
