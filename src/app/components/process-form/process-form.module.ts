@@ -4,12 +4,14 @@ import { CommonModule } from '@angular/common';
 import { ProcessFormRoutingModule } from './process-form-routing.module';
 import { ProcessFormComponent } from './process-form.component';
 import { ProcessesService } from '../../services/processes.service';
+import {MatTooltipModule} from '@angular/material/tooltip';
 
 @NgModule({
   declarations: [ProcessFormComponent],
   imports: [
     CommonModule,
-    ProcessFormRoutingModule
+    ProcessFormRoutingModule,
+    MatTooltipModule
   ],
   providers: [
     ProcessesService

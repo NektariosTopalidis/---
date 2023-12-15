@@ -5,6 +5,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ProcessFormModule } from './components/process-form/process-form.module';
 import { CreateProcessModalModule } from './components/create-process-modal/create-process-modal.module';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 
 @NgModule({
@@ -15,7 +16,8 @@ import { CreateProcessModalModule } from './components/create-process-modal/crea
     BrowserModule,
     AppRoutingModule,
     ProcessFormModule,
-    CreateProcessModalModule
+    CreateProcessModalModule,
+    BrowserAnimationsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

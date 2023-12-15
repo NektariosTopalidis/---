@@ -1,1 +1,44 @@
-<p>create-process-modal works!</p>
+<div class="modal">
+    <div class="content animate__animated animate__fadeInUp">
+        <div class="head">
+            <h2 class="title">Create Process</h2>
+            <button class="close-btn" (click)="closeAddProcessModal($event)">
+                <i class="pi pi-times"></i>
+            </button>
+        </div>
+        <div class="body">
+            <form class="process-form" [formGroup]="processForm">
+
+                <div class="process-form-top">
+                    <mat-form-field appearance="fill">
+                        <mat-label>Process ID</mat-label>
+                        <input matInput formControlName="id" required>
+                    </mat-form-field>
+                    <mat-form-field appearance="fill">
+                        <mat-label>Arrival Time</mat-label>
+                        <input matInput formControlName="arrivalTime" type="number" required>
+                    </mat-form-field>
+                </div>
+
+                <div class="process-form-bottom">
+                    <mat-form-field appearance="fill">
+                        <mat-label>Process Time</mat-label>
+                        <input matInput formControlName="serviceTime" type="number" required>
+                    </mat-form-field>
+                    <mat-form-field appearance="fill">
+                        <mat-label>Priority</mat-label>
+                        <input matInput formControlName="priority" type="number" required>
+                    </mat-form-field>
+                </div>
+
+            </form>
+        </div>
+        
+        <div class="footer">
+            @if (idExists) {
+                <span class="error-text">Please enter another ID.</span>
+            }
+            <button type="submit" [ngClass]="processForm.valid ? 'submit-btn' : 'submit-btn disabled'" [disabled]="!processForm.valid" (click)="addProcess()">CREATE</button>
+        </div>
+    </div>
+</div>

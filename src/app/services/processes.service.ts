@@ -20,11 +20,17 @@ export class ProcessesService {
     return this._addingProcess.asObservable();
   }
 
-  addProcess(){
-
+  openAddProcessModal(){
     this._addingProcess.next(true);
-
   }
 
+  closeAddProcessModal(){
+    this._addingProcess.next(false);
+  }
 
+  addProcess(process: Process){
+    const newProcessesArray = this._processes.value.concat(process);
+    this._processes.next(newProcessesArray);
+    this._addingProcess.next(false);
+  }
 }
