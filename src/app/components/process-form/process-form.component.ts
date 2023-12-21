@@ -20,9 +20,7 @@ export class ProcessFormComponent implements OnInit, OnDestroy{
 
     ngOnInit(): void {
       this.processesSub = this.processesService.processes.subscribe( processes => {
-        if(processes.length > 0){
-          this.processes = processes;
-        }
+        this.processes = processes;
       })
     }
 

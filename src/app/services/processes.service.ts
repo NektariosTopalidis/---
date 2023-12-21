@@ -33,4 +33,8 @@ export class ProcessesService {
     this._processes.next(newProcessesArray);
     this._addingProcess.next(false);
   }
+
+  clearProcesses(){
+    this._processes.next([]);
+  }
 }

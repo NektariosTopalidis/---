@@ -54,12 +54,13 @@ export class AppComponent implements OnInit, OnDestroy{
       
       if(popedProcess){
         popedProcess.serviceTime -= this.q;
-        console.log(popedProcess);
+        console.log(popedProcess.id + ': ' + popedProcess.serviceTime);
         if(popedProcess.serviceTime > 0){
           await this.roundRobinService.enqueue(popedProcess,false);
         }
       } 
       else{
+        this.processesService.clearProcesses();
         clearInterval(this.timer);
       }
       

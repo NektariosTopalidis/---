@@ -1,32 +1,10 @@
 <div class="queue">
-    <div class="cell">
-        <h3>p1</h3>
+    <div [ngClass]="i === queueData.length-1? 'cell highlighted' : 'cell'" *ngFor="let process of queueData;let i = index;">
+        <h3 class="animate__animated animate__fadeIn">{{process.id ? process.id : ''}}</h3>
     </div>
-    <div class="cell">
-        <h3>p1</h3>
-    </div>
-    <div class="cell">
-        <h3>p1</h3>
-    </div>
-    <div class="cell">
-        <h3>p1</h3>
-    </div>
-    <div class="cell">
-        <h3>p1</h3>
-    </div>
-    <div class="cell">
-        <h3>p1</h3>
-    </div>
-    <div class="cell">
-        <h3>p1</h3>
-    </div>
-    <div class="cell">
-        <h3>p1</h3>
-    </div>
-    <div class="cell">
-        <h3>p1</h3>
-    </div>
-    <div class="cell">
-        <h3>p1</h3>
-    </div>
+    @for (item of tempData; track $index) {
+        <div class="cell">
+            <h3></h3>
+        </div>
+    }
 </div>

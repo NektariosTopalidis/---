@@ -69,6 +69,10 @@ export class Queue<Type> implements queueInterface<Type> {
         return this.QueueData[0];
     }
 
+    get data(){
+      return this.QueueData;
+    }
+
     printQueue(): void {
        for (let i = 0; i < this.QueueData.length; i++) {
           console.log(this.QueueData[i]);
