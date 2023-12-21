@@ -6,6 +6,9 @@ import { AppComponent } from './app.component';
 import { ProcessFormModule } from './components/process-form/process-form.module';
 import { CreateProcessModalModule } from './components/create-process-modal/create-process-modal.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { QueueModule } from './components/queue/queue.module';
+import { ChartModule } from './components/chart/chart.module';
+import { RoundRobinService } from './services/round-robin.service';
 
 
 @NgModule({
@@ -16,10 +19,12 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     BrowserModule,
     AppRoutingModule,
     ProcessFormModule,
+    QueueModule,
+    ChartModule,
     CreateProcessModalModule,
     BrowserAnimationsModule
   ],
-  providers: [],
+  providers: [RoundRobinService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

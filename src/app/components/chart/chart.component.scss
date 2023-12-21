@@ -1,0 +1,26 @@
+@import '../../../variables.scss';
+
+.chart{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+
+    .start-btn{
+        font-size: 18px;
+        font-weight: 700;
+        color: $primary-color;
+        padding: 8px 12px;
+        border: none;
+        background-color: white;
+        border-radius: 4px;
+        touch-action: all;
+
+        transition: all 0.2s ease-in-out;
+
+        &:hover{
+            cursor: pointer;
+            background-color: rgb(196, 196, 196);
+        }
+    }
+}

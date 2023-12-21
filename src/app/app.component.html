@@ -4,14 +4,14 @@
 
 <div class="container">
   <div class="top">
-    <p>chart</p>
+    <app-chart (start)="start($event)"></app-chart>
   </div>
   <div class="bottom">
     <div class="bottom-left">
       <app-process-form></app-process-form>
     </div>
     <div class="bottom-right">
-      <p>queue</p>
+      <app-queue></app-queue>
     </div>
   </div>
 </div>

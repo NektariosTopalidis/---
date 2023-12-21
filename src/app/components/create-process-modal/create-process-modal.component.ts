@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ProcessesService } from '../../services/processes.service';
 import { Process } from '../../models/process.model';
 import { FormControl, FormGroup } from '@angular/forms';
@@ -9,7 +9,7 @@ import { Subscription } from 'rxjs';
   templateUrl: './create-process-modal.component.html',
   styleUrl: './create-process-modal.component.scss'
 })
-export class CreateProcessModalComponent implements OnInit {
+export class CreateProcessModalComponent implements OnInit, OnDestroy {
   processForm!: FormGroup;
 
   currentProcesses: Process[] = [];
@@ -58,5 +58,9 @@ export class CreateProcessModalComponent implements OnInit {
   
       this.processForm.reset(); 
     }
+  }
+
+  ngOnDestroy(): void {
+    if(this.currentProcessesSubscription) this.currentProcessesSubscription.unsubscribe(); 
   }
 }

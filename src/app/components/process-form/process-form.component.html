@@ -1,5 +1,4 @@
-<button (click)="createQueue()">initialize queue</button>
-<button (click)="preAssign()">preassing</button>
+
 <div class="table">
     <div class="table-head" #tableHead>
 
@@ -44,9 +43,9 @@
     </div>
 
     <div class="actions">
-        <button class="add-process-btn" (click)="openAddProcessModal($event)" #tooltip="matTooltip"
+        <button [ngClass]="processes.length > 10? 'add-process-btn disabled' :'add-process-btn'" (click)="openAddProcessModal($event)" #tooltip="matTooltip"
         matTooltip="Add Process"
-        [matTooltipPosition]="'right'">+</button>
+        [matTooltipPosition]="'right'" [disabled]="processes.length > 10">+</button>
     </div>
 
 </div>

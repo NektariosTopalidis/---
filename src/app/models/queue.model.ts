@@ -1,3 +1,5 @@
+import { Process } from "./process.model";
+
 interface queueInterface<Type> {
     enQueue(dataItem: Type): void;
     deQueue(): Type | undefined;
@@ -8,7 +10,7 @@ interface queueInterface<Type> {
     preAssign(dataItem: Type): void;
  }
  
-export class QueueClass<Type> implements queueInterface<Type> {
+export class Queue<Type> implements queueInterface<Type> {
     private QueueData: Array<Type> = [];
     private maxSize: number = 0;
  
@@ -24,18 +26,18 @@ export class QueueClass<Type> implements queueInterface<Type> {
        return result;
     }
     preAssign(dataItem: Type): Type | undefined {
-        if(this.isFull()){
-            let lastItem = this.QueueData[0];
-            for(let i=1;i<this.QueueData.length;i++){
-                this.QueueData[i-1] = this.QueueData[i];
-            }
-            this.QueueData[this.QueueData.length-1] = dataItem;
-            return lastItem;
-        }
-        else{
-            this.QueueData[this.QueueData.length] = dataItem;
+      //   if(this.isFull()){
+      //       let lastItem = this.QueueData[0];
+      //       for(let i=1;i<this.QueueData.length;i++){
+      //           this.QueueData[i-1] = this.QueueData[i];
+      //       }
+      //       this.QueueData[this.QueueData.length-1] = dataItem;
+      //       return lastItem;
+      //   }
+      //   else{
+            this.QueueData.unshift(dataItem);
             return;
-        }
+      //   }
 
         
     }
@@ -44,6 +46,7 @@ export class QueueClass<Type> implements queueInterface<Type> {
           console.log("The queue is full!");
        } else {
           this.QueueData.push(dataItem);
+          this.QueueData.sort((a: any,b: any) => (a.priority < b.priority? -1 : 1 ));
        }
     }
  
@@ -63,7 +66,7 @@ export class QueueClass<Type> implements queueInterface<Type> {
     }
 
     get head(){
-        return this.QueueData[this.QueueData.length - 1];
+        return this.QueueData[0];
     }
 
     printQueue(): void {

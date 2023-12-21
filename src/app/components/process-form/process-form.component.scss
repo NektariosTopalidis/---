@@ -1,10 +1,12 @@
 @import "../../../variables.scss";
 @import "../../../mixins.scss";
 
-.yo{
-    color: $secondary-color;
+.disabled{
+    opacity: 0.5;
 
-    @include transitionDelay;
+    &:hover{
+        cursor: default !important;
+    }
 }
 
 .table{
