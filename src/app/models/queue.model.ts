@@ -8,6 +8,7 @@ interface queueInterface<Type> {
     size(): number;
     printQueue(): void;
     preAssign(dataItem: Type): void;
+    sort(samePriorityWithHeadExists: boolean): void;
  }
  
 export class Queue<Type> implements queueInterface<Type> {
@@ -26,28 +27,24 @@ export class Queue<Type> implements queueInterface<Type> {
        return result;
     }
     preAssign(dataItem: Type): Type | undefined {
-      //   if(this.isFull()){
-      //       let lastItem = this.QueueData[0];
-      //       for(let i=1;i<this.QueueData.length;i++){
-      //           this.QueueData[i-1] = this.QueueData[i];
-      //       }
-      //       this.QueueData[this.QueueData.length-1] = dataItem;
-      //       return lastItem;
-      //   }
-      //   else{
-            this.QueueData.unshift(dataItem);
-            return;
-      //   }
-
-        
+      this.QueueData.unshift(dataItem);
+      return;  
     }
     enQueue(dataItem: Type): void {
        if (this.isFull()) {
-          console.log("The queue is full!");
+            console.log("The queue is full!");
        } else {
-          this.QueueData.push(dataItem);
-          this.QueueData.sort((a: any,b: any) => (a.priority < b.priority? -1 : 1 ));
+            this.QueueData.push(dataItem);
        }
+    }
+
+    sort(samePriorityWithHeadExists: boolean): void{
+      if(samePriorityWithHeadExists){
+         this.QueueData.sort((a: any,b: any) => (a.priority >= b.priority? -1 : 1 ));
+      }
+      else{
+         this.QueueData.sort((a: any,b: any) => (a.priority > b.priority? -1 : 1 ));
+      }
     }
  
     deQueue(): Type | undefined {
@@ -55,7 +52,7 @@ export class Queue<Type> implements queueInterface<Type> {
           console.log("The Queue is empty! There is no element to pop-out");
           return;
        } else {
-          var element = this.QueueData.shift();
+          var element = this.QueueData.pop();
           return element;
        }
     }
@@ -66,7 +63,7 @@ export class Queue<Type> implements queueInterface<Type> {
     }
 
     get head(){
-        return this.QueueData[0];
+        return this.QueueData[this.QueueData.length-1];
     }
 
     get data(){

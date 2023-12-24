@@ -22,6 +22,7 @@ export class AppComponent implements OnInit, OnDestroy{
   timer?: any;
   step: number = 0;
 
+  disableAddProcesses: boolean = false;
 
   processes: Process[] = [];
 
@@ -38,6 +39,7 @@ export class AppComponent implements OnInit, OnDestroy{
   }
 
   start(e: Event){    
+    this.disableAddProcesses = true;
     this.timer = setInterval(async () => {
 
       for(let process of this.processes){
@@ -61,6 +63,8 @@ export class AppComponent implements OnInit, OnDestroy{
       } 
       else{
         this.processesService.clearProcesses();
+        this.step = 0;
+        this.disableAddProcesses = false;
         clearInterval(this.timer);
       }
       

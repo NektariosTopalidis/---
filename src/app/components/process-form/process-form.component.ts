@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import { Component, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import { Process } from '../../models/process.model';
 import { ProcessesService } from '../../services/processes.service';
 import { Subscription } from 'rxjs';
@@ -11,6 +11,7 @@ import { Queue } from '../../models/queue.model';
 })
 export class ProcessFormComponent implements OnInit, OnDestroy{
     @ViewChild('tableHead') tableHead!: HTMLDivElement;
+    @Input('disableAddProcesses') disableAddProcesses!: boolean;
 
     constructor(private processesService: ProcessesService ){}
 

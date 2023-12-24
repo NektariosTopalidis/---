@@ -16,12 +16,21 @@ export class RoundRobinService {
 
   async enqueue(process: Process,firstTime: boolean){
     let tempQueue: Queue<Process> = this._queue.value;
+
+    let samePriorityWithHeadExists: boolean = false;
     
     if(tempQueue.head && process.priority === tempQueue.head.priority && firstTime){
       tempQueue.preAssign(process);
     }
     else{
       tempQueue.enQueue(process);
+      if(tempQueue.head){
+        samePriorityWithHeadExists = tempQueue.data.find(p => p.priority === tempQueue.head.priority && p.id != tempQueue.head.id)? true : false;
+        console.log(samePriorityWithHeadExists);
+        console.log('Head: ' + tempQueue.head.id);
+        tempQueue.sort(samePriorityWithHeadExists);
+      } 
+      
     }
     this._queue.next(tempQueue);
   } 

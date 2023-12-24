@@ -8,10 +8,10 @@
   </div>
   <div class="bottom">
     <div class="bottom-left">
-      <app-process-form></app-process-form>
+      <app-process-form [disableAddProcesses]="disableAddProcesses"></app-process-form>
     </div>
     <div class="bottom-right">
-      <app-queue></app-queue>
+      <app-queue [step]="step"></app-queue>
     </div>
   </div>
 </div>

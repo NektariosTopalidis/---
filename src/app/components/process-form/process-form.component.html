@@ -20,7 +20,7 @@
     <div class="table-body">
 
         @for (process of processes; track process.id) {
-            <div class="process animate__animated animate__fadeIn">
+            <div [ngClass]="process.serviceTime <= 0 ? 'process animate__animated animate__fadeIn finished' : 'process animate__animated animate__fadeIn'">
                 <div class="table-body-item">
                     <h4>{{process.id}}</h4>
                 </div>
@@ -43,9 +43,9 @@
     </div>
 
     <div class="actions">
-        <button [ngClass]="processes.length > 10? 'add-process-btn disabled' :'add-process-btn'" (click)="openAddProcessModal($event)" #tooltip="matTooltip"
+        <button [ngClass]="processes.length > 10 || disableAddProcesses? 'add-process-btn disabled' :'add-process-btn'" (click)="openAddProcessModal($event)" #tooltip="matTooltip"
         matTooltip="Add Process"
-        [matTooltipPosition]="'right'" [disabled]="processes.length > 10">+</button>
+        [matTooltipPosition]="'right'" [disabled]="processes.length > 10 || disableAddProcesses">+</button>
     </div>
 
 </div>

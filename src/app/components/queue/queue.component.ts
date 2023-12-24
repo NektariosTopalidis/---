@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { Process } from '../../models/process.model';
 import { RoundRobinService } from '../../services/round-robin.service';
@@ -9,6 +9,8 @@ import { RoundRobinService } from '../../services/round-robin.service';
   styleUrl: './queue.component.scss'
 })
 export class QueueComponent implements OnInit,OnDestroy{
+  @Input('step') step: number = 0;
+  
 
   private queueSubscription!: Subscription;
   
@@ -21,8 +23,7 @@ export class QueueComponent implements OnInit,OnDestroy{
     this.queueSubscription = this.roundRobinService.queue.subscribe(queue => {
       
       this.queueData = queue.data;
-      // this.queueData = this.queueData.reverse();
-
+      
       let amountOfDataRemaining = 10 - this.queueData.length;
 
       let tempArr = [];
@@ -33,12 +34,11 @@ export class QueueComponent implements OnInit,OnDestroy{
 
       this.tempData = tempArr;
 
-      // console.log(this.queueData);
     })
   }
 
   ngOnDestroy(): void {
-    
+    if(this.queueSubscription) this.queueSubscription.unsubscribe();
   }
 
 }
