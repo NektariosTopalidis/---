@@ -27,7 +27,7 @@
                     </mat-form-field>
                     <mat-form-field appearance="fill">
                         <mat-label>Priority</mat-label>
-                        <input matInput formControlName="priority" type="number" required>
+                        <input matInput formControlName="priority" type="number" min="1" max="7" (keyup)="checkPriority(priorityInput)" required #priorityInput>
                     </mat-form-field>
                 </div>
 

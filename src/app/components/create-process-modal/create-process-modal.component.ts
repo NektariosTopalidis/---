@@ -41,6 +41,13 @@ export class CreateProcessModalComponent implements OnInit, OnDestroy {
     this.processesService.closeAddProcessModal();
   }
 
+  checkPriority(priorityInput: HTMLInputElement){
+    if(<number><unknown>priorityInput.value < 1 || <number><unknown>priorityInput.value > 7 ){
+      priorityInput.value = '';
+    }
+    
+  }
+
   addProcess(){
     
     const id = this.processForm.value.id;
