@@ -45,38 +45,41 @@ export class AppComponent implements OnInit, OnDestroy{
     this.timer = setInterval(async () => {
 
       for(let process of this.processes){
-        if(process.arrivalTime === this.step){
+        if(process.arrivalTime <= this.step && !process.isQueued){
           await this.roundRobinService.enqueue(process,true);
+          process.setIsQueued(true);
         }
       }
 
+      setTimeout(async () => {
+        let popedProcess = await this.roundRobinService.dequeue();
       
-      let popedProcess = await this.roundRobinService.dequeue();
-      
-      console.log(this.step);
-      
-      
-      if(popedProcess){
-        popedProcess.serviceTime = popedProcess.serviceTime<this.q?  0 : popedProcess.serviceTime - this.q;
-        console.log(popedProcess.id + ': ' + popedProcess.serviceTime);
-        if(popedProcess.serviceTime > 0){
-          await this.roundRobinService.enqueue(popedProcess,false);
+        console.log(this.step);
+        
+        
+        if(popedProcess){
+          popedProcess.serviceTime = popedProcess.serviceTime<this.q?  0 : popedProcess.serviceTime - this.q;
+          console.log(popedProcess.id + ': ' + popedProcess.serviceTime);
+          if(popedProcess.serviceTime > 0){
+            await this.roundRobinService.enqueue(popedProcess,false);
+          }
+        } 
+        
+        if(!popedProcess && !this.processes.find(p => p.arrivalTime >= this.step)){
+          this.processesService.clearProcesses();
+          this.step = 0;
+          this.disableAddProcesses = false;
+          clearInterval(this.timer);
         }
-      } 
-      
-      if(!popedProcess && !this.processes.find(p => p.arrivalTime >= this.step)){
-        this.processesService.clearProcesses();
-        this.step = 0;
-        this.disableAddProcesses = false;
-        clearInterval(this.timer);
-      }
-      else{
-        this.step += this.q;
-      }
+        else{
+          this.step += this.q;
+        }
+      },2000)
+
 
       
       
-    },3000);
+    },4000);
   }
 
   ngOnDestroy(): void {
