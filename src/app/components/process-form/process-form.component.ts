@@ -29,6 +29,26 @@ export class ProcessFormComponent implements OnInit, OnDestroy{
       this.processesService.openAddProcessModal();
     }
 
+    generateRandomProcesses(){
+      this.processesService.clearProcesses();
+
+      setTimeout(() => {
+        for (let i = 0; i < 5; i++) {
+          let randomProcess: Process;
+          
+          const id = 'P' + i;
+          const arrivalTime = i===0? 0 : Math.floor(Math.random() * 10) + 1;
+          const serviceTime = Math.floor(Math.random() * 6) + 1;
+          const priority =  Math.floor(Math.random() * 7) + 1;
+          
+          randomProcess = new Process(id,arrivalTime,serviceTime,priority);
+  
+          this.processesService.addProcess(randomProcess);
+  
+        }
+      },500);
+    }
+
     ngOnDestroy(): void {
       if(this.processesSub) this.processesSub.unsubscribe();
     }

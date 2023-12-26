@@ -38,7 +38,9 @@ export class AppComponent implements OnInit, OnDestroy{
     })
   }
 
-  start(e: Event){    
+  start(e: number){  
+    this.q = e;
+      
     this.disableAddProcesses = true;
     this.timer = setInterval(async () => {
 
@@ -55,20 +57,25 @@ export class AppComponent implements OnInit, OnDestroy{
       
       
       if(popedProcess){
-        popedProcess.serviceTime -= this.q;
+        popedProcess.serviceTime = popedProcess.serviceTime<this.q?  0 : popedProcess.serviceTime - this.q;
         console.log(popedProcess.id + ': ' + popedProcess.serviceTime);
         if(popedProcess.serviceTime > 0){
           await this.roundRobinService.enqueue(popedProcess,false);
         }
       } 
-      else{
+      
+      if(!popedProcess && !this.processes.find(p => p.arrivalTime >= this.step)){
         this.processesService.clearProcesses();
         this.step = 0;
         this.disableAddProcesses = false;
         clearInterval(this.timer);
       }
+      else{
+        this.step += this.q;
+      }
+
       
-      this.step++;
+      
     },3000);
   }
 

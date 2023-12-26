@@ -1,9 +1,9 @@
 <div class="chart">
-    <button class="start-btn" (click)="sendStart()">START</button>
+    <button [ngClass]="processes.length >= 2 && quantumTimeForm.valid ? 'start-btn' : 'start-btn disabled'" (click)="sendStart()" [disabled]="processes.length < 2 && !quantumTimeForm.valid">START</button>
     <form [formGroup]="quantumTimeForm">
         <mat-form-field appearance="fill">
             <mat-label>Quantum Time</mat-label>
-            <input matInput formControlName="q" required>
+            <input matInput formControlName="q" type="number" required>
         </mat-form-field>
     </form>
 </div>

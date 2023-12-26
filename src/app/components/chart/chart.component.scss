@@ -1,5 +1,10 @@
 @import '../../../variables.scss';
 
+.disabled{
+    opacity: 0.5 !important;
+    pointer-events: none !important;
+}
+
 .chart{
     display: flex;
     justify-content: center;

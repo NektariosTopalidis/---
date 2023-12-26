@@ -10,7 +10,7 @@ export class ProcessesService {
   constructor() { }
 
   private _addingProcess: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
-  private _processes: BehaviorSubject<Process[]> = new BehaviorSubject<Process[]>([new Process('b1',0,4,3),new Process('b2',1,5,1),new Process('b3',4,4,2),new Process('b4',6,3,3)]);
+  private _processes: BehaviorSubject<Process[]> = new BehaviorSubject<Process[]>([]);
 
   get processes(){
     return this._processes.asObservable();
