@@ -38,28 +38,26 @@ export class AppComponent implements OnInit, OnDestroy{
     })
   }
 
-  start(e: number){  
+  async start(e: number){  
     this.q = e;
       
     this.disableAddProcesses = true;
+    for(let process of this.processes){
+      if(process.arrivalTime === 0 && !process.isQueued){
+        await this.roundRobinService.enqueue(process,true);
+        process.setIsQueued(true);
+      }
+    }
+
     this.timer = setInterval(async () => {
 
-      for(let process of this.processes){
-        if(process.arrivalTime <= this.step && !process.isQueued){
-          await this.roundRobinService.enqueue(process,true);
-          process.setIsQueued(true);
-        }
-      }
 
       setTimeout(async () => {
         let popedProcess = await this.roundRobinService.dequeue();
-      
-        console.log(this.step);
         
         
         if(popedProcess){
           popedProcess.serviceTime = popedProcess.serviceTime<this.q?  0 : popedProcess.serviceTime - this.q;
-          console.log(popedProcess.id + ': ' + popedProcess.serviceTime);
           if(popedProcess.serviceTime > 0){
             await this.roundRobinService.enqueue(popedProcess,false);
           }
@@ -73,8 +71,16 @@ export class AppComponent implements OnInit, OnDestroy{
         }
         else{
           this.step += this.q;
+
+          for(let process of this.processes){
+            if(process.arrivalTime <= this.step && !process.isQueued){
+              await this.roundRobinService.enqueue(process,true);
+              process.setIsQueued(true);
+            }
+          }
+    
         }
-      },2000)
+      },500)
 
 
       

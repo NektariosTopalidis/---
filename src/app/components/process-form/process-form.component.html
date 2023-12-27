@@ -1,6 +1,6 @@
 
 <div class="random-btn-container">
-    <button class="random-btn" (click)="generateRandomProcesses()">GENERATE RANDOM</button>
+    <button [ngClass]="disableAddProcesses? 'random-btn disabled' : 'random-btn'" [disabled]="disableAddProcesses" (click)="generateRandomProcesses()">GENERATE RANDOM</button>
 </div>
 <div class="table">
     <div class="table-head" #tableHead>

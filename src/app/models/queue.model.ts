@@ -7,8 +7,8 @@ interface queueInterface<Type> {
     isFull(): boolean;
     size(): number;
     printQueue(): void;
-    preAssign(dataItem: Type): void;
-    sort(samePriorityWithHeadExists: boolean): void;
+    preAssign(dataItem: Type,index: number): void;
+    sort(samePriorityWithHeadExists: boolean,amountOfSamePriorityProcesses: number): void;
  }
  
 export class Queue<Type> implements queueInterface<Type> {
@@ -26,21 +26,39 @@ export class Queue<Type> implements queueInterface<Type> {
        let result = this.QueueData.length >= this.maxSize;
        return result;
     }
-    preAssign(dataItem: Type): Type | undefined {
-      this.QueueData.unshift(dataItem);
+    preAssign(dataItem: Type,index: number): Type | undefined {
+      for(let i = index;i<this.size();i++){
+         if(this.QueueData[i+1]){
+            console.log(this.QueueData[i]);
+            
+            this.QueueData[i] = this.QueueData[i+1];
+         }
+         else{
+            this.QueueData[i] = dataItem;
+         }
+      }
       return;  
     }
     enQueue(dataItem: Type): void {
        if (this.isFull()) {
             console.log("The queue is full!");
        } else {
-            this.QueueData.push(dataItem);
+            this.QueueData.unshift(dataItem);
+            
+            this.QueueData.sort((a: any,b: any) => (a.priority > b.priority? -1 : 1 ));
        }
     }
 
-    sort(samePriorityWithHeadExists: boolean): void{
+    
+
+    sort(samePriorityWithHeadExists: boolean,amountOfSamePriorityProcesses: number): void{
       if(samePriorityWithHeadExists){
-         this.QueueData.sort((a: any,b: any) => (a.priority >= b.priority? -1 : 1 ));
+         // if(amountOfSamePriorityProcesses == 1){ 
+         //    this.QueueData.sort((a: any,b: any) => (a.priority >= b.priority? -1 : 1 ));
+         // }
+         // else{
+         // }
+         this.QueueData.sort((a: any,b: any) => (a.priority > b.priority? -1 : 1 ));
       }
       else{
          this.QueueData.sort((a: any,b: any) => (a.priority > b.priority? -1 : 1 ));
