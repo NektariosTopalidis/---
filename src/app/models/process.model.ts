@@ -4,7 +4,14 @@ export class Process {
     arrivalTime!: number;
     serviceTime!: number;
     priority!: number;
-    private _isQueued: boolean = false;
+    turnAroundTime: number = 0;
+
+    responseTime: number = 0;
+    hasBeenPoppedOnce: boolean = false;
+    firstTimeInQueue: boolean = false;
+
+    isQueued: boolean = false;
+
 
     constructor(id: string,arrivalTime: number,serviceTime: number,priority: number){
         this.id = id;
@@ -13,13 +20,6 @@ export class Process {
         this.priority = priority;
     }
 
-    setIsQueued(isQueued: boolean){
-        this._isQueued = isQueued;
-    }
-
-    get isQueued(){
-        return this._isQueued;
-    }
 
 
 }

@@ -9,15 +9,15 @@ export class ProcessesService {
 
   constructor() { }
 
-  private P1 = new Process('P1',0,6,2); 
-  private P2 = new Process('P2',3,4,2); 
-  private P3 = new Process('P3',1,4,3); 
+  private P1 = new Process('P1',0,4,1); 
+  private P2 = new Process('P2',1,2,3); 
+  private P3 = new Process('P3',3,4,2); 
   private P4 = new Process('P4',6,3,2); 
   private P5 = new Process('P5',10,3,1); 
   private P6 = new Process('P6',12,3,5); 
   private pArr = [this.P1,this.P2,this.P3];
   private _addingProcess: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
-  private _processes: BehaviorSubject<Process[]> = new BehaviorSubject<Process[]>([]);
+  private _processes: BehaviorSubject<Process[]> = new BehaviorSubject<Process[]>(this.pArr);
 
   get processes(){
     return this._processes.asObservable();

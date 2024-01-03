@@ -44,8 +44,8 @@ export class AppComponent implements OnInit, OnDestroy{
     this.disableAddProcesses = true;
     for(let process of this.processes){
       if(process.arrivalTime === 0 && !process.isQueued){
-        await this.roundRobinService.enqueue(process,true);
-        process.setIsQueued(true);
+        await this.roundRobinService.enqueue(process,true,this.step,this.q);
+        process.isQueued = true;
       }
     }
 
@@ -53,17 +53,24 @@ export class AppComponent implements OnInit, OnDestroy{
 
 
       setTimeout(async () => {
-        let popedProcess = await this.roundRobinService.dequeue();
+        let popedProcess = await this.roundRobinService.dequeue(this.step,this.q);
         
         
         if(popedProcess){
           popedProcess.serviceTime = popedProcess.serviceTime<this.q?  0 : popedProcess.serviceTime - this.q;
           if(popedProcess.serviceTime > 0){
-            await this.roundRobinService.enqueue(popedProcess,false);
+            await this.roundRobinService.enqueue(popedProcess,false,this.step,this.q);
           }
         } 
         
         if(!popedProcess && !this.processes.find(p => p.arrivalTime >= this.step)){
+
+          console.log(this.processes);
+          for(let p of this.processes){
+            console.log(p.id + ' Response Time: ' + p.responseTime);
+            
+          }
+
           this.processesService.clearProcesses();
           this.step = 0;
           this.disableAddProcesses = false;
@@ -74,8 +81,8 @@ export class AppComponent implements OnInit, OnDestroy{
 
           for(let process of this.processes){
             if(process.arrivalTime <= this.step && !process.isQueued){
-              await this.roundRobinService.enqueue(process,true);
-              process.setIsQueued(true);
+              await this.roundRobinService.enqueue(process,true,this.step,this.q);
+              process.isQueued = true;
             }
           }
     
