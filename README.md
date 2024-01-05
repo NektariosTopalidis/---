@@ -2,26 +2,12 @@
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.0.0.
 
-## Development server
+## How To Run The App 
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+<b>Step 1</b>: Clone this repository by running the command: `git clone https://github.com/NektariosTopalidis/SLS-Project.git`.  <br><br>
+<b>Step 2</b>: Open your CMD and navigate to the folder you cloned the app ( not Windows Powershell ) and run this command: `npm install`. If you want to open it in VS Code just type `code .`.  <br><br>
+<b>Step 3</b>: Once all the packages have been installed you run this command: `ng serve --open`. This command will automatically start a local server on `http://localhost:4200/` where the app is running.   <br><br>
+<b>Step 4</b>: To close the app you have to press `CTRL+C` on you CMD and then `Y`.  <br><br>
+ 
+### How To Use The App
 
-## Code scaffolding
-
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
-
-## Build
-
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
