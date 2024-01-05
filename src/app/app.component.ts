@@ -25,6 +25,7 @@ export class AppComponent implements OnInit, OnDestroy{
   disableAddProcesses: boolean = false;
 
   processes: Process[] = [];
+  idleTime: number = 0;
 
   ngOnInit(): void {
     this.toggleAddProcessModalSubscription = this.processesService.addingProcess.subscribe((addingProcess) => {
@@ -44,7 +45,7 @@ export class AppComponent implements OnInit, OnDestroy{
     this.disableAddProcesses = true;
     for(let process of this.processes){
       if(process.arrivalTime === 0 && !process.isQueued){
-        await this.roundRobinService.enqueue(process,true,this.step,this.q);
+        await this.roundRobinService.enqueue(process,true,this.step,this.q,false);
         process.isQueued = true;
       }
     }
@@ -57,35 +58,88 @@ export class AppComponent implements OnInit, OnDestroy{
         
         
         if(popedProcess){
-          popedProcess.serviceTime = popedProcess.serviceTime<this.q?  0 : popedProcess.serviceTime - this.q;
-          if(popedProcess.serviceTime > 0){
-            await this.roundRobinService.enqueue(popedProcess,false,this.step,this.q);
+          if(popedProcess.serviceTime<this.q){
+            popedProcess.turnAroundTime += popedProcess.serviceTime;
+            this.idleTime += (this.q - popedProcess.serviceTime);
+            popedProcess.serviceTime = 0;
           }
+          else if(popedProcess.serviceTime === this.q){
+            popedProcess.turnAroundTime += this.q;
+            popedProcess.serviceTime -= this.q;
+          }
+          else{
+            popedProcess.serviceTime -= this.q;
+          }
+
+
+          if(popedProcess.serviceTime > 0){
+            await this.roundRobinService.enqueue(popedProcess,false,this.step,this.q,false);
+          }
+          // else{
+          //   if(!this.processes.find(p => p.arrivalTime >= this.step)) await this.roundRobinService.addResponseTime(this.q);
+          // }
         } 
+
+        if(!popedProcess && this.processes.find(p => p.arrivalTime >= this.step)){
+          this.idleTime += this.q;
+        }
         
         if(!popedProcess && !this.processes.find(p => p.arrivalTime >= this.step)){
 
-          console.log(this.processes);
+          console.log('Response Times\n');
           for(let p of this.processes){
             console.log(p.id + ' Response Time: ' + p.responseTime);
-            
           }
+
+          console.log('\nTurnaround Times\n');
+          for(let p of this.processes){
+            console.log(p.id + ' Turnaround Time: ' + p.turnAroundTime);
+          }
+
+          console.log('\nIdle Time: ' + this.idleTime);
+          
 
           this.processesService.clearProcesses();
           this.step = 0;
+          this.idleTime = 0;
           this.disableAddProcesses = false;
           clearInterval(this.timer);
         }
         else{
           this.step += this.q;
 
+          let processesAdded: number = 0;
+
           for(let process of this.processes){
-            if(process.arrivalTime <= this.step && !process.isQueued){
-              await this.roundRobinService.enqueue(process,true,this.step,this.q);
+            if(process.isQueued && process.serviceTime > 0){
+              process.turnAroundTime += this.q;
+            }
+
+            if(process.arrivalTime === this.step && !process.isQueued){
+              if(processesAdded > 0){
+                await this.roundRobinService.enqueue(process,true,this.step,this.q,true);
+              }
+              else{
+                await this.roundRobinService.enqueue(process,true,this.step,this.q,false);
+              }
               process.isQueued = true;
+              processesAdded++;
+            }
+
+            if(process.arrivalTime < this.step && !process.isQueued){
+              process.turnAroundTime += (this.step - process.arrivalTime);
+              if(processesAdded > 0){
+                await this.roundRobinService.enqueue(process,true,this.step,this.q,true);
+              }
+              else{
+                await this.roundRobinService.enqueue(process,true,this.step,this.q,false);
+              }
+              process.isQueued = true;
+              processesAdded++;
             }
           }
-    
+          
+          processesAdded = 0;
         }
       },500)
 

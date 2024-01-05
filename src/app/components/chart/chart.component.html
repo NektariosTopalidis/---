@@ -3,7 +3,7 @@
     <form [formGroup]="quantumTimeForm">
         <mat-form-field appearance="fill">
             <mat-label>Quantum Time</mat-label>
-            <input matInput formControlName="q" type="number" required>
+            <input matInput formControlName="q" [min]="1" type="number" required>
         </mat-form-field>
     </form>
 </div>

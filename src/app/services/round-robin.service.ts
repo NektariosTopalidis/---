@@ -14,40 +14,35 @@ export class RoundRobinService {
     return this._queue.asObservable();
   }
 
-  async enqueue(process: Process,firstTime: boolean,step: number,q:number){
+  constructor() { }
+
+  async enqueue(process: Process,firstTime: boolean,step: number,q:number,moreThanOneProcessAdded: boolean){
     let tempQueue: Queue<Process> = this._queue.value;
 
     if(firstTime) process.firstTimeInQueue = true;
     
-    tempQueue.enQueue(process);
+    tempQueue.enQueue(process,moreThanOneProcessAdded);
 
-    if(process.priority === tempQueue.data[tempQueue.data.length-1].priority && process.id !== tempQueue.data[tempQueue.data.length-1].id && firstTime){
-      let processesWithSamePriority: number = 0;
+    // if(process.priority === tempQueue.data[tempQueue.data.length-1].priority && process.id !== tempQueue.data[tempQueue.data.length-1].id && firstTime){
+    //   let processesWithSamePriority: number = 0;
       
-      tempQueue.data.forEach((p) => {
-        if(p.priority === process.priority && p.id != process.id){
-          processesWithSamePriority++;
-        }
-      })
+    //   tempQueue.data.forEach((p) => {
+    //     if(p.priority === process.priority && p.id != process.id){
+    //       processesWithSamePriority++;
+    //     }
+    //   })
 
-      if(processesWithSamePriority === 1){
-        let i = tempQueue.data.indexOf(process);
-        tempQueue.preAssign(process,i);
-      }
+    //   if(processesWithSamePriority === 1){
+    //     let i = tempQueue.data.indexOf(process);
+    //     tempQueue.preAssign(process,i);
+    //   }
       
-    }
+    // }
 
     tempQueue.data.forEach((p) => {
-      if(!p.hasBeenPoppedOnce){
-
-        let headID = this._queue.value.data[this._queue.value.data.length-1].id;
-
-        // console.log("Current: " + p.id + " Head: " + headID);
-        
-        if(p.id !== headID){
-          p.responseTime += q;
-        }
-
+      if(p.arrivalTime < step && p.firstTimeInQueue){
+        p.responseTime += (step-p.arrivalTime);
+        p.firstTimeInQueue = false;
       }
     })
 
@@ -61,20 +56,17 @@ export class RoundRobinService {
     tempQueue.data.forEach((p) => {
       if(!p.hasBeenPoppedOnce){
 
-        let headID = this._queue.value.data[this._queue.value.data.length-1].id;
-
-        // console.log("Current: " + p.id + " Head: " + headID);
         
-
-        if(p.arrivalTime < step && p.firstTimeInQueue){
-          console.log(step - p.arrivalTime);
-          
-          p.responseTime += (step-p.arrivalTime);
-        }
-
-        if(p.firstTimeInQueue){
-          p.firstTimeInQueue = false;
-        } 
+        let headID = this._queue.value.data[this._queue.value.data.length-1].id;
+      
+        
+        if(p.arrivalTime === step && p.firstTimeInQueue && p.id != headID) p.responseTime += q;
+        
+        if(!p.firstTimeInQueue && p.id != headID) p.responseTime += q;
+        
+        if(p.firstTimeInQueue) p.firstTimeInQueue = false;
+        
+        
       }
     })
 
@@ -83,6 +75,5 @@ export class RoundRobinService {
     if(popepProcess) popepProcess.hasBeenPoppedOnce = true;
     return popepProcess;
   }
-
-  constructor() { }
+  
 }

@@ -1,14 +1,13 @@
 import { Process } from "./process.model";
 
 interface queueInterface<Type> {
-    enQueue(dataItem: Type): void;
+    enQueue(dataItem: Type,moreThanOneProcessAdded: boolean): void;
     deQueue(): Type | undefined;
     isEmpty(): boolean;
     isFull(): boolean;
     size(): number;
     printQueue(): void;
     preAssign(dataItem: Type,index: number): void;
-    sort(samePriorityWithHeadExists: boolean,amountOfSamePriorityProcesses: number): void;
  }
  
 export class Queue<Type> implements queueInterface<Type> {
@@ -39,30 +38,16 @@ export class Queue<Type> implements queueInterface<Type> {
       }
       return;  
     }
-    enQueue(dataItem: Type): void {
+    enQueue(dataItem: any,moreThanOneProcessAdded: boolean): void {
        if (this.isFull()) {
             console.log("The queue is full!");
        } else {
             this.QueueData.unshift(dataItem);
             
             this.QueueData.sort((a: any,b: any) => (a.priority > b.priority? -1 : 1 ));
+            if(moreThanOneProcessAdded) 
+               this.QueueData.sort((a: any,b: any) => (a.priority === b.priority && b.priority === dataItem.priority && a.arrivalTime > b.arrivalTime? -1 : 1 ));
        }
-    }
-
-    
-
-    sort(samePriorityWithHeadExists: boolean,amountOfSamePriorityProcesses: number): void{
-      if(samePriorityWithHeadExists){
-         // if(amountOfSamePriorityProcesses == 1){ 
-         //    this.QueueData.sort((a: any,b: any) => (a.priority >= b.priority? -1 : 1 ));
-         // }
-         // else{
-         // }
-         this.QueueData.sort((a: any,b: any) => (a.priority > b.priority? -1 : 1 ));
-      }
-      else{
-         this.QueueData.sort((a: any,b: any) => (a.priority > b.priority? -1 : 1 ));
-      }
     }
  
     deQueue(): Type | undefined {
