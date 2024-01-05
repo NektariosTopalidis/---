@@ -1,0 +1,74 @@
+<div class="results-backdrop">
+    <div class="results-modal">
+
+        <div class="results-modal-head">
+            <h2 class="title">Results</h2>
+            <button class="close-btn" (click)="closeResultsModal($event)">
+                <i class="pi pi-times"></i>
+            </button>
+        </div>
+
+        <div class="results-modal-content">
+            <div class="response-time">
+                <h3>Response Time</h3>
+                <div class="total">
+                    <p>(</p>
+                    @for (time of responseTimes; track $index) {
+                        @if ($index === responseTimes.length-1) {
+                            <p>{{time.time}}</p>
+                        }
+                        @else {
+                            <p>{{time.time + ' + '}}</p>
+                        }
+                    }
+                    <p>{{') / ' + responseTimes.length + ' = ' + responseTimeTotal.toFixed(1)}}</p>
+                </div>
+            </div>
+            <div class="turnaround-time">
+                <h3>Turnaround Time</h3>
+                <div class="total">
+                    <p>(</p>
+                    @for (time of turnaroundTimes; track $index) {
+                        @if ($index === turnaroundTimes.length-1) {
+                            <p>{{time.time}}</p>
+                        }
+                        @else {
+                            <p>{{time.time + ' + '}}</p>
+                        }
+                    }
+                    <p>{{') / ' + turnaroundTimes.length + ' = ' + turnaroundTimeTotal.toFixed(1)}}</p>
+                </div>
+            </div>
+            <div class="idle-time">
+                <h3>Idle Time</h3>
+                <div class="total">
+                    <p>{{idleTime}}</p>
+                </div>
+            </div>
+            <div class="processes">
+                <h3>Processes</h3>
+                <table class="processes-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Arrival Time</th>
+                            <th>Service Time</th>
+                            <th>Priority</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @for (process of processes; track $index) {
+                            <tr>
+                                <td>{{process.id}}</td>
+                                <td>{{process.arrivalTime}}</td>
+                                <td>{{process.serviceTime}}</td>
+                                <td>{{process.priority}}</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+</div>

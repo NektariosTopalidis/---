@@ -9,6 +9,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { QueueModule } from './components/queue/queue.module';
 import { ChartModule } from './components/chart/chart.module';
 import { RoundRobinService } from './services/round-robin.service';
+import { ResultsModalModule } from './components/results-modal/results-modal.module';
 
 
 @NgModule({
@@ -20,6 +21,7 @@ import { RoundRobinService } from './services/round-robin.service';
     AppRoutingModule,
     ProcessFormModule,
     QueueModule,
+    ResultsModalModule,
     ChartModule,
     CreateProcessModalModule,
     BrowserAnimationsModule

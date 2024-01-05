@@ -18,7 +18,7 @@ export class ProcessFormComponent implements OnInit, OnDestroy{
     private processesSub!: Subscription;
 
     processes: Process[] = [];
-
+    
     ngOnInit(): void {
       this.processesSub = this.processesService.processes.subscribe( processes => {
         this.processes = processes;

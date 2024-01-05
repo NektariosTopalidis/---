@@ -4,6 +4,11 @@ import { Subscription } from 'rxjs';
 import { RoundRobinService } from './services/round-robin.service';
 import { Process } from './models/process.model';
 
+export interface resultData{
+  id: string;
+  time: number;
+}
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -21,11 +26,15 @@ export class AppComponent implements OnInit, OnDestroy{
   q: number = 1;
   timer?: any;
   step: number = 0;
+  isFinished: boolean = false; 
 
   disableAddProcesses: boolean = false;
 
   processes: Process[] = [];
+  responseTimes: resultData[] = [];
+  turnaroundTimes: resultData[] = [];
   idleTime: number = 0;
+
 
   ngOnInit(): void {
     this.toggleAddProcessModalSubscription = this.processesService.addingProcess.subscribe((addingProcess) => {
@@ -70,14 +79,6 @@ export class AppComponent implements OnInit, OnDestroy{
           else{
             popedProcess.serviceTime -= this.q;
           }
-
-
-          if(popedProcess.serviceTime > 0){
-            await this.roundRobinService.enqueue(popedProcess,false,this.step,this.q,false);
-          }
-          // else{
-          //   if(!this.processes.find(p => p.arrivalTime >= this.step)) await this.roundRobinService.addResponseTime(this.q);
-          // }
         } 
 
         if(!popedProcess && this.processes.find(p => p.arrivalTime >= this.step)){
@@ -85,24 +86,15 @@ export class AppComponent implements OnInit, OnDestroy{
         }
         
         if(!popedProcess && !this.processes.find(p => p.arrivalTime >= this.step)){
-
-          console.log('Response Times\n');
+          this.processesService.restoreProcessesServiceTimes();
           for(let p of this.processes){
-            console.log(p.id + ' Response Time: ' + p.responseTime);
+            this.responseTimes = this.responseTimes.concat({id: p.id,time: p.responseTime});
+            this.turnaroundTimes = this.turnaroundTimes.concat({id: p.id,time: p.turnAroundTime});
           }
-
-          console.log('\nTurnaround Times\n');
-          for(let p of this.processes){
-            console.log(p.id + ' Turnaround Time: ' + p.turnAroundTime);
-          }
-
-          console.log('\nIdle Time: ' + this.idleTime);
-          
-
-          this.processesService.clearProcesses();
           this.step = 0;
           this.idleTime = 0;
           this.disableAddProcesses = false;
+          this.isFinished = true;
           clearInterval(this.timer);
         }
         else{
@@ -138,15 +130,24 @@ export class AppComponent implements OnInit, OnDestroy{
               processesAdded++;
             }
           }
+
+          if(popedProcess && popedProcess.serviceTime > 0){
+            await this.roundRobinService.enqueue(popedProcess,false,this.step,this.q,false);
+          }
           
           processesAdded = 0;
         }
-      },500)
+      },1000)
 
 
       
       
     },4000);
+  }
+
+  closeResultsModal(){
+    this.processesService.clearProcesses();
+    this.isFinished = false;
   }
 
   ngOnDestroy(): void {

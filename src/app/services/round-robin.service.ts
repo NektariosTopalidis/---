@@ -23,7 +23,7 @@ export class RoundRobinService {
     
     tempQueue.enQueue(process,moreThanOneProcessAdded);
 
-    // if(process.priority === tempQueue.data[tempQueue.data.length-1].priority && process.id !== tempQueue.data[tempQueue.data.length-1].id && firstTime){
+    // if(process.priority === tempQueue.data[tempQueue.data.length-1].priority && process.id !== tempQueue.data[tempQueue.data.length-1].id && firstTime && !moreThanOneProcessAdded){
     //   let processesWithSamePriority: number = 0;
       
     //   tempQueue.data.forEach((p) => {

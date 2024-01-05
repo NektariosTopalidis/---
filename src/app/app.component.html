@@ -2,6 +2,10 @@
   <app-create-process-modal></app-create-process-modal>
 }
 
+@if (isFinished) {
+  <app-results-modal [idleTime]="idleTime" [responseTimes]="responseTimes" [turnaroundTimes]="turnaroundTimes" (closeResultsModalEvent)="closeResultsModal()"></app-results-modal>
+}
+
 <div class="container">
   <div class="top">
     <app-chart (start)="start($event)"></app-chart>
