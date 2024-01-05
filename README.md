@@ -11,4 +11,4 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
  
 ## How To Use The App
 
-To use the app just add Processes by clicking on the `+` or just the generate `GENERATE RANDOM` button. After that type the `Quantum Time` and press `START`.
+To use the app just add Processes by clicking on the `+` or just the `GENERATE RANDOM` button. After that type the `Quantum Time` and press `START`.
