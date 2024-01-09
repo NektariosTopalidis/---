@@ -1,4 +1,4 @@
-<h2  class="step">Step: {{step}}</h2>
+<h2  class="step">Ticks: {{step}}</h2>
 <div class="queue">
     <div [ngClass]="i === queueData.length-1? 'cell highlighted' : 'cell'" *ngFor="let process of queueData;let i = index;">
         <h3 class="animate__animated animate__fadeIn">{{process.id ? process.id : ''}}</h3>
