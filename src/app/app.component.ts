@@ -92,7 +92,6 @@ export class AppComponent implements OnInit, OnDestroy{
             this.turnaroundTimes = this.turnaroundTimes.concat({id: p.id,time: p.turnAroundTime});
           }
           this.step = 0;
-          this.idleTime = 0;
           this.disableAddProcesses = false;
           this.isFinished = true;
           clearInterval(this.timer);
@@ -148,6 +147,7 @@ export class AppComponent implements OnInit, OnDestroy{
   closeResultsModal(){
     this.processesService.clearProcesses();
     this.isFinished = false;
+    this.idleTime = 0;
   }
 
   ngOnDestroy(): void {
