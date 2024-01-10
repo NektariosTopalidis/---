@@ -4,7 +4,7 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 ## How To Run The App 
 
-Visit `https://nektariostopalidis.github.io`.
+Visit `nektariostopalidis.github.io`.
 
 ### To Run Locally
 
