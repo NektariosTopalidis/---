@@ -2,6 +2,8 @@
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.0.0.
 
+This app is a simulation showing how processes are being handled by the OS using Round-Robin scheduling with priorities. 
+
 ## How To Run The App 
 
 Visit `nektariostopalidis.github.io`.
